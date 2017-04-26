@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
-from models import Nationalities
+from .models import Nationalities
 
 # Create your views here.
 def index(request):
