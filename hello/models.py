@@ -15,4 +15,4 @@ class User(models.Model):
     nationality = models.ForeignKey('Nationalities')
 
     def __unicode__(self):
-        return self.name + " " + self.surname
+        return self.name + "  " + self.surname
