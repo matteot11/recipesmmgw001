@@ -7,7 +7,7 @@ from .models import Nationalities
 def index(request):
     #return HttpResponse('Hello World!')
     #return render(request, 'index.html')
-
+    Nationalities.objects.create(nationality='bella')
     nationalities = Nationalities.objects.all()
     return render(request, 'index.html', {'nationalities': nationalities})
 
