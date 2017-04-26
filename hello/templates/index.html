@@ -14,7 +14,9 @@
 		<noscript><link rel="stylesheet" href="/static/assets/css/noscript.css" /></noscript>
 	</head>
 	<body>
-
+    {% for natio in nationalities %}
+        <span>{{ natio.nationality }}</span>
+    {% endfor %}
 		<!-- Wrapper -->
 			<div id="wrapper">
 
