@@ -2,8 +2,8 @@ from django.conf.urls import include, url
 
 from django.contrib import admin
 admin.autodiscover()
-
 import hello.views
+from django.contrib.auth.views import *
 
 # Examples:
 # url(r'^$', 'gettingstarted.views.home', name='home'),
@@ -12,4 +12,14 @@ import hello.views
 urlpatterns = [
     url(r'^$', hello.views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
+
+    # Login-Logout URLs
+    url(r'^accounts/login/$', hello.views.login, name='login'),
+    url(r'^accounts/logout/$', logout, name='logout'),
+    url(r'^accounts/loggedin/$', hello.views.loggedin, name='loggedin'),
+
+    # Registration URLs
+    url(r'^accounts/register/$', hello.views.registration_page, name='registration'),
+    url(r'^accounts/register/complete/$', hello.views.registration_request, name='registration_request'),
+
 ]

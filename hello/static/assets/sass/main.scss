@@ -3,27 +3,39 @@
 @import 'libs/_mixins';
 @import 'libs/_skel';
 @import 'font-awesome.min.css';
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300italic,600italic,300,600');
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300,700,300italic,700italic|Source+Sans+Pro:900');
 
 /*
-	Dimension by HTML5 UP
+	Massively by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
 	@include skel-breakpoints((
-		xlarge:		'(max-width: 1680px)',
-		large:		'(max-width: 1280px)',
-		medium:		'(max-width: 980px)',
-		small:		'(max-width: 736px)',
-		xsmall:		'(max-width: 480px)',
-		xxsmall:	'(max-width: 360px)'
+		xlarge: '(max-width: 1680px)',
+		large: '(max-width: 1280px)',
+		medium: '(max-width: 980px)',
+		small: '(max-width: 736px)',
+		xsmall: '(max-width: 480px)',
+		xxsmall: '(max-width: 360px)'
 	));
 
 	@include skel-layout((
 		reset: 'full',
-		boxModel: 'border'
+		boxModel: 'border',
+		grid: ( gutters: 1.5rem )
 	));
+
+	@mixin color($p) {
+		@include color-typography($p);
+		@include color-box($p);
+		@include color-button($p);
+		@include color-form($p);
+		@include color-list($p);
+		@include color-section($p);
+		@include color-table($p);
+		@include color-pagination($p);
+	}
 
 // Base.
 
@@ -32,18 +44,22 @@
 
 // Component.
 
-	@import 'components/_form';
 	@import 'components/_box';
+	@import 'components/_button';
+	@import 'components/_form';
 	@import 'components/_icon';
 	@import 'components/_image';
 	@import 'components/_list';
+	@import 'components/_section';
 	@import 'components/_table';
-	@import 'components/_button';
+	@import 'components/_pagination';
 
 // Layout.
 
-	@import 'layout/_bg';
 	@import 'layout/_wrapper';
+	@import 'layout/_intro';
 	@import 'layout/_header';
+	@import 'layout/_nav';
 	@import 'layout/_main';
 	@import 'layout/_footer';
+	@import 'layout/_navPanel';
