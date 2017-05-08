@@ -32,7 +32,7 @@ def login(request):
         auth.login(request, user)
 
         #return render(request, 'registration/loggedin.html')
-        return render(request, 'registration/loggedin.html', {'username': request.user.username})
+        return render(request, 'registration/loggedin.html', {'username': request.user.username, 'error': False})
     else:
         #messages.error(request, 'Invalid login credentials')
         return render(request, 'index.html', {'error': True})
@@ -98,9 +98,7 @@ def registration_request(request):
             error = True
             return render(request, 'register.html',{'error': error, 'message': message, "nationalities": nationalities, 'registration_completed':False})
         else:
-            #user = User.objects.create_user(username=username, password=confirm_password, email=email)
-            user = User(username=username, password=confirm_password, email=email)
-            user.save()
+            user = User.objects.create_user(username=username, password=confirm_password, email=email)
             profile = Profile(user=user, nationality=kind_of_cousine)
             profile.save()
             return render(request, 'register.html', {'error': error, 'registration_completed': True})
