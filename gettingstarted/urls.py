@@ -15,8 +15,9 @@ urlpatterns = [
 
     # Login-Logout URLs
     url(r'^accounts/login/$', hello.views.login, name='login'),
-    url(r'^accounts/logout/$', logout, name='logout'),
-    url(r'^accounts/loggedin/$', hello.views.loggedin, name='loggedin'),
+    url(r'^accounts/login/update_list$', hello.views.update_list, name='update_list'),
+    url(r'^accounts/logout/$', logout, {'next_page': 'index'}, name='logout'),
+    #url(r'^accounts/loggedin/$', hello.views.loggedin, name='loggedin'),
 
     # Registration URLs
     url(r'^accounts/register/$', hello.views.registration_page, name='registration'),

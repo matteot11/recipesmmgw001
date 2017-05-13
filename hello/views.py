@@ -3,7 +3,7 @@ from django.http import HttpResponse
 import requests
 from .models import Nationalities, Profile
 from django.contrib.auth.models import User
-
+from django.contrib import messages
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
@@ -14,9 +14,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     #return HttpResponse('Hello World!')
-    return render(request, 'index.html')
+    if request.user.is_authenticated():
+        return render(request, 'mainPage.html', {'username': request.user.username})
+    else:
+        return render(request, 'index.html')
 
-@csrf_exempt
+
 def login(request):
 
     # here you get the post request username and password
@@ -32,10 +35,17 @@ def login(request):
         auth.login(request, user)
 
         #return render(request, 'registration/loggedin.html')
-        return render(request, 'registration/loggedin.html', {'username': request.user.username, 'error': False})
+        return render(request, 'mainPage.html', {'username': username})
+
     else:
         #messages.error(request, 'Invalid login credentials')
-        return render(request, 'index.html', {'error': True})
+        #return render(request, 'index.html', {'error': True})
+        messages.error(request, 'Invalid login credentials')
+        return redirect('index')
+
+def logout(request):
+    # message user or whatever
+    return auth.logout(request)
 
 '''
 def login(request):
@@ -43,7 +53,6 @@ def login(request):
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
     if user is not None:
-        print "merda"
         login(request, user)
         # Redirect to a success page.
         return render(request, 'registration/loggedin.html')
@@ -105,6 +114,9 @@ def registration_request(request):
 
 def registration_complete(request):
     return render_to_response('registration/registration_complete.html')
+
+def update_list(request):
+    return render(request, 'mainPage.html', {'username': request.user.username})
 
 
 '''

@@ -7,7 +7,8 @@
 {% load static %}
 <html>
 	<head>
-		<title>Massively by HTML5 UP</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon_black.ico"/>
+        <title> SPAGHETTI ADVISOR</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
@@ -20,10 +21,9 @@
 
 				<!-- Intro -->
                     <div id="intro">
-						<h1>This is<br />
-						Massively</h1>
-						<p><!--[-->A free, fully responsive HTML5 + CSS3 site template designed by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a><!--]--><br />
-						<!--[-->and released for free under the <a href="https://html5up.net/license">Creative Commons license</a>.<!--]--></p>
+						<img src="{% static "images/spaguetti.png" %}" width=10% height=auto>
+						<h1>SPAGHETTI ADVISOR</h1>
+						<p>Your quick food shopping advisor</p>
 						<ul class="actions">
 							<li><a href="#header" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
 						</ul>
@@ -39,13 +39,13 @@
 						<ul class="links">
 							<li><a href={% url 'index' %}>Login</a></li>
 							<li class="active"><a href={% url 'registration' %}>Register</a></li>
-							<li><a href="elements.html">Info</a></li>
+							<li><a href={% url 'index' %}>Info</a></li>
 						</ul>
 						<ul class="icons">
-							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+							<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://github.com/matteot11/recipesmmgw001" target="_blank" class="icon fa-github"><span class="label">GitHub</span></a></li>
 						</ul>
 					</nav>
             </div>
@@ -94,7 +94,7 @@
 								</ul>
 							</form>
                         {% else %}
-                            <font color="red">Registration completed</font>
+                            <font color="red">Registration completed. Please log in.</font>
                         {% endif %}
 						</section>
 					</footer>

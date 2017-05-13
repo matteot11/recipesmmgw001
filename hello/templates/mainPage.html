@@ -7,9 +7,9 @@
 {% load static %}
 <html>
 	<head>
-        <link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon_black.ico"/>
+		<link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon_black.ico"/>
         <title> SPAGHETTI ADVISOR</title>
-		<meta chrset="utf-8" />
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
 		<noscript><link rel="stylesheet" href="{% static "assets/css/noscript.css" %}" /></noscript>
@@ -20,26 +20,31 @@
 			<div id="wrapper" class="fade-in">
 
 				<!-- Intro -->
-                    <div id="intro">
-                        <img src="{% static "images/spaguetti.png" %}" width=10% height=auto>
-						<h1>SPAGHETTI ADVISOR</h1>
-						<p>Your quick food shopping advisor</p>
+                        <!--<div id="intro">
+						<h1>This is<br />
+						Massively</h1>
+						<p>A free, fully responsive HTML5 + CSS3 site template designed by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a><br />
+						and released for free under the <a href="https://html5up.net/license">Creative Commons license</a>.</p>
 						<ul class="actions">
 							<li><a href="#header" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
 						</ul>
-					</div>
+					</div>-->
+
 
 				<!-- Header -->
 					<header id="header">
-						<a href="index.html" class="logo">Massively</a>
+						<a href="#" class="logo">Spaghetti advisor</a>
 					</header>
 
 				<!-- Nav -->
 					<nav id="nav">
 						<ul class="links">
-							<li class="active"><a href={% url 'index' %}>Login</a></li>
-							<li><a href={% url 'registration' %}>Register</a></li>
-							<li><a href={% url 'index' %}>Info</a></li>
+							<!--<li><a href={% url 'index' %}>Login</a></li>
+							<li><a href={% url 'registration' %}>Register</a></li>-->
+                            <li class="active"><a>Main Page</a></li>
+                            <li><a href={% url 'logout' %}>Logout</a></li>
+                            <li><a href={% url 'index' %}>Info</a></li>
+
 						</ul>
 						<ul class="icons">
 							<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
@@ -55,27 +60,15 @@
 				<!-- Footer -->
 					<footer id="footer">
 						<section>
-							<form method="post" action="{% url 'login' %}">
+							<form method="post" action="update_list">
                                 {% csrf_token %}
 								<div class="field">
-                                    {% if user.is_authenticated %}
-                                        <font color="red">Invalid Login Credentials</font>
-                                    {% endif %}
-                                    {% if messages %}
-                                        {% for message in messages %}
-                                        <font color="red">{{ message }}</font>
-                                        {% endfor %}
-                                    {% endif %}
-                                	<label for="username">Username</label>
-									<input type="text" name="username" id="username" />
+                                    <font color="red">Hello {{ username }}</font>
+                                 	<label for="username">Insert your ingredient</label>
+									<input type="text" name="ingredient" id="ingredient" />
                                 </div>
-								<div class="field">
-									<label for="password">Password</label>
-									<input type="password" name="password" id="password" />
-
-								</div>
 								<ul class="actions">
-									<li><input type="submit" value="Login" /></li>
+									<li><input type="submit" value="Insert" /></li>
 								</ul>
 							</form>
 						</section>
