@@ -7,7 +7,7 @@
 {% load static %}
 <html>
 	<head>
-		<link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon_black.ico" %}"/>
+        <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon_black.ico" %}"/>
         <title> SPAGHETTI ADVISOR</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -21,7 +21,7 @@
 
 				<!-- Intro -->
                     <div id="intro">
-						<img src="{% static "images/spaguetti.png" %}" width=10% height=auto>
+                        <img src="{% static "images/spaguetti.png" %}" width=10% height=auto>
 						<h1>SPAGHETTI ADVISOR</h1>
 						<p>Your quick food shopping advisor</p>
 						<ul class="actions">
@@ -37,9 +37,10 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<ul class="links">
-							<li><a href={% url 'index' %}>Login</a></li>
-							<li class="active"><a href={% url 'registration' %}>Register</a></li>
-							<li><a href={% url 'info' %}>Info</a></li>
+                            <li><a href={% url 'index' %}>Login</a></li>
+							<li><a href={% url 'registration' %}>Register</a></li>
+
+							<li class="active"><a href={% url 'info' %}>Info</a></li>
 						</ul>
 						<ul class="icons">
 							<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
@@ -55,47 +56,26 @@
 				<!-- Footer -->
 					<footer id="footer">
 						<section>
-                        {% if not registration_completed %}
-							<form method="post" action="{% url 'registration_request' %}">
+							<form method="post" action="{% url 'login' %}">
                                 {% csrf_token %}
 								<div class="field">
-                                    {% if error %}
+                                    {% if messages %}
+                                        {% for message in messages %}
                                         <font color="red">{{ message }}</font>
+                                        {% endfor %}
                                     {% endif %}
-									<label for="username">Username</label>
-									<input type="text" name="username" id="username" value="" />
+                                	<label for="username">Username</label>
+									<input type="text" name="username" id="username" />
                                 </div>
-                                <div class="field">
-									<label for="email">E-mail</label>
-									<input type="email" name="email" id="email" value=""/>
-								</div>
 								<div class="field">
 									<label for="password">Password</label>
-									<input type="password" name="password" id="password" value=""/>
-								</div>
-                                <div class="field">
-									<label for="password">Confirm Password</label>
-									<input type="password" name="confirm_password" id="confirm_password" value=""/>
-								</div>
-                                <div class="field">
-									<label for="kind_of_cousine">Kind of Cuisine</label>
-									<select name="kind_of_cousine">
-                                        <option selected="selected" value="null">--Nationality--</option>
-                                        {% for obj in nationalities %}
-                                            <option value="{{ obj }}">{{ obj }}</option>
-                                        {% endfor %}
-                                            <option value="other">all the world</option>
+									<input type="password" name="password" id="password" />
 
-                                    </select>
 								</div>
-
 								<ul class="actions">
-									<li><input type="submit" value="Register" /></li>
+									<li><input type="submit" value="Login" /></li>
 								</ul>
 							</form>
-                        {% else %}
-                            <font color="red">Registration completed. Please log in.</font>
-                        {% endif %}
 						</section>
 					</footer>
 
@@ -107,6 +87,7 @@
 			<script src="{% static "assets/js/skel.min.js" %}"></script>
 			<script src="{% static "assets/js/util.js" %}"></script>
 			<script src="{% static "assets/js/main.js" %}"></script>
+
 
 	</body>
 </html>

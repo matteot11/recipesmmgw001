@@ -7,9 +7,9 @@
 {% load static %}
 <html>
 	<head>
-        <link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon_black.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon_black.ico" %}"/>
         <title> SPAGHETTI ADVISOR</title>
-		<meta chrset="utf-8" />
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{% static "assets/css/main.css" %}" />
 		<noscript><link rel="stylesheet" href="{% static "assets/css/noscript.css" %}" /></noscript>
@@ -39,7 +39,7 @@
 						<ul class="links">
 							<li class="active"><a href={% url 'index' %}>Login</a></li>
 							<li><a href={% url 'registration' %}>Register</a></li>
-							<li><a href={% url 'index' %}>Info</a></li>
+							<li><a href={% url 'info' %}>Info</a></li>
 						</ul>
 						<ul class="icons">
 							<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
@@ -58,9 +58,7 @@
 							<form method="post" action="{% url 'login' %}">
                                 {% csrf_token %}
 								<div class="field">
-                                    {% if user.is_authenticated %}
-                                        <font color="red">Invalid Login Credentials</font>
-                                    {% endif %}
+
                                     {% if messages %}
                                         {% for message in messages %}
                                         <font color="red">{{ message }}</font>

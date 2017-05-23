@@ -7,7 +7,7 @@
 {% load static %}
 <html>
 	<head>
-		<link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon_black.ico"/>
+		<link rel="shortcut icon" type="image/x-icon" href="{% static "images/favicon_black.ico" %}"/>
         <title> SPAGHETTI ADVISOR</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -43,13 +43,12 @@
 							<li><a href={% url 'registration' %}>Register</a></li>-->
                             <li class="active"><a>Main Page</a></li>
                             <li><a href={% url 'logout' %}>Logout</a></li>
-                            <li><a href={% url 'index' %}>Info</a></li>
-
 						</ul>
 						<ul class="icons">
 							<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
 							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>-->
+                            <li><a>Hello {{ username }}</a></li>
 							<li><a href="https://github.com/matteot11/recipesmmgw001" target="_blank" class="icon fa-github"><span class="label">GitHub</span></a></li>
 						</ul>
 					</nav>
@@ -60,10 +59,26 @@
 				<!-- Footer -->
 					<footer id="footer">
 						<section>
+                            <form method="post" action="login">
+                                <div class="field">
+                                <label for="username">Your kind of cuisine is {{ nationality }}: </label>
+                                    <select name="kind_of_cousine">
+                                        <option selected="selected" value="null">{{ nationality }}</option>
+                                        {% for obj in nationalities %}
+                                            <option value="{{ obj }}">{{ obj }}</option>
+                                        {% endfor %}
+                                            <option value="other">all the world</option>
+                                    </select>
+                                </div>
+                                    <ul class="actions">
+                                        <input type="submit" href="" value="Change your kind of cuisine"/>
+                                    </ul>
+                            </form>
+
 							<form method="post" action="update_list">
                                 {% csrf_token %}
 								<div class="field">
-                                    <font color="red">Hello {{ username }}</font>
+
                                  	<label for="username">Insert your ingredient</label>
 									<input type="text" name="ingredient" id="ingredient" />
                                 </div>
@@ -71,7 +86,7 @@
 									<li><input type="submit" value="Insert" /></li>
 								</ul>
 							</form>
-						</section>
+                         </section>
 					</footer>
 
 

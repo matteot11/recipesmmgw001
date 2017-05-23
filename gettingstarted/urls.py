@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^accounts/register/$', hello.views.registration_page, name='registration'),
     url(r'^accounts/register/complete/$', hello.views.registration_request, name='registration_request'),
 
+    url(r'^info/$', hello.views.info, name='info'),
+
 ]

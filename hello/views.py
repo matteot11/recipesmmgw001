@@ -15,7 +15,13 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     #return HttpResponse('Hello World!')
     if request.user.is_authenticated():
-        return render(request, 'mainPage.html', {'username': request.user.username})
+        user = User.objects.get(username=request.user.username)
+        profile = Profile.objects.get(user_id=user.id)
+        nationality = profile.nationality
+
+        nationalities = Nationalities.objects.all().order_by("nationality")
+
+        return render(request, 'mainPage.html', {'username': request.user.username, 'nationality': nationality, 'nationalities': nationalities})
     else:
         return render(request, 'index.html')
 
@@ -35,7 +41,13 @@ def login(request):
         auth.login(request, user)
 
         #return render(request, 'registration/loggedin.html')
-        return render(request, 'mainPage.html', {'username': username})
+        user = User.objects.get(username=username)
+        profile = Profile.objects.get(user_id=user.id)
+        nationality = profile.nationality
+
+        nationalities = Nationalities.objects.all().order_by("nationality")
+
+        return render(request, 'mainPage.html', {'username': username, 'nationality': nationality, 'profile': profile, 'nationalities': nationalities})
 
     else:
         #messages.error(request, 'Invalid login credentials')
@@ -43,27 +55,11 @@ def login(request):
         messages.error(request, 'Invalid login credentials')
         return redirect('index')
 
+
 def logout(request):
     # message user or whatever
     return auth.logout(request)
 
-'''
-def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        # Redirect to a success page.
-        return render(request, 'registration/loggedin.html')
-    else:
-        # Return an 'invalid login' error message.
-        return render(request, 'index.html')
-'''
-#def index(request):
-#    r = requests.get('http://httpbin.org/status/418')
-#    print(r.text)
-#    return HttpResponse('<pre>' + r.text + '</pre>')
 
 def loggedin (request):
     return render_to_response('registration/loggedin.html',
@@ -119,14 +115,5 @@ def update_list(request):
     return render(request, 'mainPage.html', {'username': request.user.username})
 
 
-'''
-def db(request):
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, 'db.html', {'greetings': greetings})
-
-'''
+def info(request):
+    return render(request, 'info.html', {'user': request.user})
