@@ -59,31 +59,36 @@
 				<!-- Footer -->
 					<footer id="footer">
 						<section>
-                            <form method="post" action="login">
-                                <div class="field">
-                                <label for="username">Your kind of cuisine is {{ nationality }}: </label>
-                                    <select name="kind_of_cousine">
-                                        <option selected="selected" value="null">{{ nationality }}</option>
-                                        {% for obj in nationalities %}
-                                            <option value="{{ obj }}">{{ obj }}</option>
-                                        {% endfor %}
-                                            <option value="other">all the world</option>
-                                    </select>
-                                </div>
-                                    <ul class="actions">
-                                        <input type="submit" href="" value="Change your kind of cuisine"/>
-                                    </ul>
-                            </form>
-
-							<form method="post" action="update_list">
+							<form method="post" action="{% url 'update_list' %}">
                                 {% csrf_token %}
-								<div class="field">
+                                <div class="field">
 
-                                 	<label for="username">Insert your ingredient</label>
-									<input type="text" name="ingredient" id="ingredient" />
+                                    {% if not ingredient_list %}
+                                        <label for="cuisine">Your kind of cuisine is {{ nationality }}: </label>
+                                            <select name="kind_of_cousine">
+                                                <option selected="selected" value="null">{{ nationality }}</option>
+                                                {% for obj in nationalities %}
+                                                    <option value="{{ obj }}">{{ obj }}</option>
+                                                {% endfor %}
+                                                    <option value="other">all the world</option>
+                                            </select>
+                                        <br/>
+                                    {% endif %}
+
+
+
+                                    <label for="ingredient">Insert your ingredient</label>
+									<input type="text" name="new_ingredient" id="new_ingredient" />
+                                    <ul>
+                                        {% for ingredient in ingredient_list %}
+                                      <li>{{ ingredient }}</li>
+                                        {% endfor %}
+                                    </ul>
+
                                 </div>
 								<ul class="actions">
-									<li><input type="submit" value="Insert" /></li>
+									<li><input type="submit" name="Insert" value="Insert" /></li>
+                                    <li><input type="submit" name="Delete" value="Delete" /></li>
 								</ul>
 							</form>
                          </section>

@@ -12,16 +12,17 @@ from django.contrib import auth
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
+ingredient_list = []
+
 def index(request):
     #return HttpResponse('Hello World!')
     if request.user.is_authenticated():
         user = User.objects.get(username=request.user.username)
         profile = Profile.objects.get(user_id=user.id)
         nationality = profile.nationality
-
         nationalities = Nationalities.objects.all().order_by("nationality")
 
-        return render(request, 'mainPage.html', {'username': request.user.username, 'nationality': nationality, 'nationalities': nationalities})
+        return render(request, 'mainPage.html', {'username': request.user.username, 'nationality': nationality, 'nationalities': nationalities, 'ingredient_list': ingredient_list})
     else:
         return render(request, 'index.html')
 
@@ -44,10 +45,9 @@ def login(request):
         user = User.objects.get(username=username)
         profile = Profile.objects.get(user_id=user.id)
         nationality = profile.nationality
-
         nationalities = Nationalities.objects.all().order_by("nationality")
 
-        return render(request, 'mainPage.html', {'username': username, 'nationality': nationality, 'profile': profile, 'nationalities': nationalities})
+        return render(request, 'mainPage.html', {'username': username, 'nationality': nationality, 'profile': profile, 'nationalities': nationalities, 'ingredient_list': ingredient_list})
 
     else:
         #messages.error(request, 'Invalid login credentials')
@@ -108,12 +108,21 @@ def registration_request(request):
             profile.save()
             return render(request, 'register.html', {'error': error, 'registration_completed': True})
 
+
 def registration_complete(request):
     return render_to_response('registration/registration_complete.html')
 
-def update_list(request):
-    return render(request, 'mainPage.html', {'username': request.user.username})
 
+def update_list(request):
+    if 'Insert' in request.POST:
+        new_ingredient = request.POST.get('new_ingredient')
+        ingredient_list.append(new_ingredient)
+        return render(request, 'mainPage.html', {'username': request.user.username, 'ingredient_list': ingredient_list})
+    if 'Delete' in request.POST:
+        ingredient_list[:] = []
+        #return render(request, 'mainPage.html', {'username': request.user.username, 'ingredient_list': ingredient_list})
+        return index(request)
 
 def info(request):
     return render(request, 'info.html', {'user': request.user})
+
