@@ -21,11 +21,16 @@ def index(request):
         #nationality = profile.nationality
         #nationalities = Nationalities.objects.all().order_by("nationality")
 
-        ingredient_list_as_string = request.COOKIES['ingredient_list']
-        ingredient_list = ingredient_list_as_string.split(",")
-        del ingredient_list[0]
-        resp = render(request, 'mainPage.html', {'username': request.user.username, 'nationality': getUserNationality(request), 'nationalities': getAllNationalities(), 'ingredient_list': ingredient_list})
+        if 'ingredient_list' in request.COOKIES.keys():
+            ingredient_list_as_string = request.COOKIES['ingredient_list']
+            ingredient_list = ingredient_list_as_string.split(",")
+            del ingredient_list[0]
+            resp = render(request, 'mainPage.html', {'username': request.user.username, 'nationality': getUserNationality(request), 'nationalities': getAllNationalities(), 'ingredient_list': ingredient_list})
         #resp.set_cookie('ingredient_list', "")
+        else:
+            resp = render(request, 'mainPage.html', {'username': request.user.username, 'nationality': getUserNationality(request), 'nationalities': getAllNationalities()})
+            ingredient_list_as_string = ""
+            resp.set_cookie('ingredient_list', ingredient_list_as_string)
         return resp
     else:
         return render(request, 'index.html')
