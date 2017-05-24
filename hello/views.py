@@ -12,17 +12,21 @@ from django.contrib import auth
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
-ingredient_list = []
 
 def index(request):
     #return HttpResponse('Hello World!')
     if request.user.is_authenticated():
-        user = User.objects.get(username=request.user.username)
-        profile = Profile.objects.get(user_id=user.id)
-        nationality = profile.nationality
-        nationalities = Nationalities.objects.all().order_by("nationality")
+        #user = User.objects.get(username=request.user.username)
+        #profile = Profile.objects.get(user_id=user.id)
+        #nationality = profile.nationality
+        #nationalities = Nationalities.objects.all().order_by("nationality")
 
-        return render(request, 'mainPage.html', {'username': request.user.username, 'nationality': nationality, 'nationalities': nationalities, 'ingredient_list': ingredient_list})
+        ingredient_list_as_string = request.COOKIES['ingredient_list']
+        ingredient_list = ingredient_list_as_string.split(",")
+        del ingredient_list[0]
+        resp = render(request, 'mainPage.html', {'username': request.user.username, 'nationality': getUserNationality(request), 'nationalities': getAllNationalities(), 'ingredient_list': ingredient_list})
+        #resp.set_cookie('ingredient_list', "")
+        return resp
     else:
         return render(request, 'index.html')
 
@@ -47,7 +51,10 @@ def login(request):
         nationality = profile.nationality
         nationalities = Nationalities.objects.all().order_by("nationality")
 
-        return render(request, 'mainPage.html', {'username': username, 'nationality': nationality, 'profile': profile, 'nationalities': nationalities, 'ingredient_list': ingredient_list})
+        ingredient_list_as_string = ""
+        resp = render(request, 'mainPage.html', {'username': username, 'nationality': nationality, 'profile': profile, 'nationalities': nationalities})
+        resp.set_cookie('ingredient_list', ingredient_list_as_string)
+        return resp
 
     else:
         #messages.error(request, 'Invalid login credentials')
@@ -115,14 +122,29 @@ def registration_complete(request):
 
 def update_list(request):
     if 'Insert' in request.POST:
+        ingredient_list_as_string = request.COOKIES['ingredient_list']
         new_ingredient = request.POST.get('new_ingredient')
-        ingredient_list.append(new_ingredient)
-        return render(request, 'mainPage.html', {'username': request.user.username, 'ingredient_list': ingredient_list})
+        ingredient_list_as_string = ingredient_list_as_string + "," + new_ingredient
+        ingredient_list = ingredient_list_as_string.split(",")
+        del ingredient_list[0]
+        #print ingredient_list
+        resp = render(request, 'mainPage.html', {'username': request.user.username, 'ingredient_list': ingredient_list})
+        resp.set_cookie('ingredient_list', ingredient_list_as_string) #it is not possible to set a list as a value for a cookie
+        return resp
+
     if 'Delete' in request.POST:
-        ingredient_list[:] = []
-        #return render(request, 'mainPage.html', {'username': request.user.username, 'ingredient_list': ingredient_list})
-        return index(request)
+        resp = render(request, 'mainPage.html', {'username': request.user.username, 'nationality': getUserNationality(request), 'nationalities': getAllNationalities()})
+        resp.set_cookie('ingredient_list', "")
+        return resp
 
 def info(request):
     return render(request, 'info.html', {'user': request.user})
 
+def getUserNationality(request):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user_id=user.id)
+    nationality = profile.nationality
+    return nationality
+
+def getAllNationalities():
+    return Nationalities.objects.all().order_by("nationality")
